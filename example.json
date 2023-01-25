@@ -1,0 +1,159 @@
+[
+    {
+        "name": "Category 1",
+        "employees": [
+            {
+                "id": "1",
+                "name": "Joao",
+                "password": "password1",
+                "buildings": [
+                    {
+                        "id": "1",
+                        "name": "Prédio 1",
+                        "tasks": [
+                            "Limpar sala 1",
+                            "Trocar o ar"
+                        ],
+                        "rooms": [
+                            {
+                                "id": 1,
+                                "name": "Sala 1",
+                                "photo": [
+                                    {
+                                        "id": 1,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 2,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 2,
+                                "name": "Sala 2",
+                                "photo": [
+                                    {
+                                        "id": 3,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 4,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "name": "Pedro",
+                "password": "password2",
+                "buildings": [
+                    {
+                        "id": "2",
+                        "name": "Prédio 2",
+                        "tasks": [
+                            "Limpar sala 2",
+                            "Trocar o ar"
+                        ],
+                        "rooms": [
+                            {
+                                "id": 1,
+                                "name": "Sala 2",
+                                "photo": [
+                                    {
+                                        "id": 5,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 6,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 2,
+                                "name": "Sala 2",
+                                "photo": [
+                                    {
+                                        "id": 7,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 8,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "3",
+                        "name": "Prédio 3",
+                        "tasks": [
+                            "Limpar sala 3",
+                            "Trocar o ar"
+                        ],
+                        "rooms": [
+                            {
+                                "id": 3,
+                                "name": "Sala 3",
+                                "photo": [
+                                    {
+                                        "id": 7,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 8,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            },
+                            {
+                                "id": 4,
+                                "name": "Sala 4",
+                                "photo": [
+                                    {
+                                        "id": 9,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    },
+                                    {
+                                        "id": 10,
+                                        "description": "feito isso",
+                                        "date": "25/01/2023",
+                                        "content": "base64"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

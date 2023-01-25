@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -14,12 +14,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const data = [
-  { id: 1, name: 'Foto 1' },
-  { id: 2, name: 'Foto 2' },
-  { id: 3, name: 'Foto 3' }
-];
-
 function Item({ name, onPress }) {
   return (
     <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
@@ -28,15 +22,35 @@ function Item({ name, onPress }) {
   );
 }
 
-function PhotosScreen() {
+function PhotosScreen( { route } ) {
+  const [photos, setPhotos] = useState([]);
+  const { category, employee, building, room } = route.params;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+        const data = await response.json();
+        const categoryFound = data.find(cat => cat.name === category.name);
+        const employeeFound = categoryFound.employees.find(emp => emp.id === employee.id)
+        const buildingFound = employeeFound.buildings.find(build => build.id === building.id)
+        const roomFound = buildingFound.rooms.find(rm => rm.id === room.id)
+        console.log(roomFound.photo)
+        setPhotos(roomFound.photo);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={data}
+          data={photos}
           renderItem={({ item }) => (
             <Item
-              name={item.name}
+              name={item.description}
             />
           )}
           keyExtractor={item => item.id.toString()}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -25,24 +25,32 @@ function Item({ name, onPress }) {
 
 function EmployeesScreen({ route }) {
   const navigation = useNavigation();
+  const [employees, setEmployees] = useState([]);
   const { category } = route.params;
-  const employees = [
-    { id: 1, name: 'Funcionário 1', categoryId: 1 },
-    { id: 2, name: 'Funcionário 2', categoryId: 2 },
-    { id: 3, name: 'Funcionário 3', categoryId: 3 },
-  ];
 
-  const employeesInCategory = employees.filter(employee => employee.categoryId === category.id);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+        const data = await response.json();
+        const categoryFound = data.find(cat => cat.name === category.name);
+        setEmployees(categoryFound.employees);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={employeesInCategory}
+          data={employees}
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Prédios', { category: item })}
+              onPress={() => navigation.navigate('Prédios', { category, employee: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}

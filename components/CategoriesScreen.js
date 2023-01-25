@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
 
 const styles = StyleSheet.create({
   container: {
@@ -17,12 +15,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const data = [
-  { id: 1, name: 'Categoria 1' },
-  { id: 2, name: 'Categoria 2' },
-  { id: 3, name: 'Categoria 3' }
-];
-
 function Item({ name, onPress }) {
   return (
     <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
@@ -33,29 +25,33 @@ function Item({ name, onPress }) {
 
 function CategoriesScreen() {
   const navigation = useNavigation();
-  const categoriesRef = firebase.firestore().collection('categories');
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = categoriesRef.onSnapshot(querySnapshot => {
-      const data = querySnapshot.docs.map(doc => doc.data());
-      setCategories(data);
-    });
-    return () => unsubscribe();
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={categories}
+          data={Object.values(categories)}
           renderItem={({ item }) => (
             <Item
               name={item.name}
               onPress={() => navigation.navigate('Funcionários', { category: item })}
             />
           )}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id}
         />
       </View>
     </View>
