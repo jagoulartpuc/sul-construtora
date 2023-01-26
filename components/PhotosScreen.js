@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import Photo from './Photo'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,17 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '80%',
   },
+  plusButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 
 function Item({ name, onPress }) {
@@ -22,40 +34,39 @@ function Item({ name, onPress }) {
   );
 }
 
-function PhotosScreen( { route } ) {
+function PhotosScreen({ route }) {
   const [photos, setPhotos] = useState([]);
-  const { category, employee, building, room } = route.params;
-
+  const { room } = route.params;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
-        const data = await response.json();
-        const categoryFound = data.find(cat => cat.name === category.name);
-        const employeeFound = categoryFound.employees.find(emp => emp.id === employee.id)
-        const buildingFound = employeeFound.buildings.find(build => build.id === building.id)
-        const roomFound = buildingFound.rooms.find(rm => rm.id === room.id)
-        console.log(roomFound.photo)
-        setPhotos(roomFound.photo);
+        setPhotos(room.photo);
       } catch (error) {
         console.error(error);
       }
     };
     fetchData();
   }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
           data={photos}
           renderItem={({ item }) => (
-            <Item
-              name={item.description}
-            />
+            <Photo item={item} />
           )}
           keyExtractor={item => item.id.toString()}
         />
       </View>
+      <TouchableOpacity
+        style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
+        onPress={() => {
+          // Open camera code here
+        }}
+      >
+        <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+      </TouchableOpacity>
     </View>
   );
 }

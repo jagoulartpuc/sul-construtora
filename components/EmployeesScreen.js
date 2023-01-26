@@ -31,10 +31,7 @@ function EmployeesScreen({ route }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
-        const data = await response.json();
-        const categoryFound = data.find(cat => cat.name === category.name);
-        setEmployees(categoryFound.employees);
+        setEmployees(category.employees);
       } catch (error) {
         console.error(error);
       }
@@ -50,7 +47,7 @@ function EmployeesScreen({ route }) {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Prédios', { category, employee: item })}
+              onPress={() => navigation.navigate('Prédios', { employee: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}

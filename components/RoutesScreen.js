@@ -30,7 +30,6 @@ function Item({ name, onPress }) {
   );
 }
 
-// Issue here
 const getTasksByEmployee = (employees, employeeId) => {
   let tasks = [];
   employees.forEach((employee) => {
@@ -43,9 +42,22 @@ const getTasksByEmployee = (employees, employeeId) => {
   return tasks;
 }
 
+const getRoomsByEmployee = (employees, employeeId) => {
+  let rooms = [];
+  employees.forEach((employee) => {
+    if (employee.id && employee.id === employeeId) {
+      employee.buildings.forEach((building) => {
+        rooms = rooms.concat(building.rooms);
+      });
+    }
+  });
+  return rooms;
+}
+
 function RoutesScreen() {
   const navigation = useNavigation();
   const [routes, setRoutes] = useState([]);
+  const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,12 +67,11 @@ function RoutesScreen() {
         let employees = data.reduce((acc, cat) => {
           return acc.concat(cat.employees);
         }, []);
-        console.log('Employees', employees)
         const id = await (AsyncStorage.getItem('id'));
-        console.log('id', id)
-        const tasks = getTasksByEmployee(employees, id.toString())
-        console.log('tasks', tasks)
+        const tasks = getTasksByEmployee(employees, id)
+        const roomsFound = getRoomsByEmployee(employees, id)
         setRoutes(tasks);
+        setRooms(roomsFound);
       } catch (error) {
         console.error(error);
       }
@@ -75,8 +86,16 @@ function RoutesScreen() {
           data={routes}
           renderItem={({ item }) => (
             <Item
+              name={item}
+            />
+          )}
+        />
+        <FlatList
+          data={rooms}
+          renderItem={({ item }) => (
+            <Item
               name={item.name}
-              onPress={() => navigation.navigate('Salas', { room: item })}
+              onPress={() => navigation.navigate('Fotos', { room: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}

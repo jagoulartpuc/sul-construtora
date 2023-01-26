@@ -26,18 +26,12 @@ function Item({ name, onPress }) {
 function RoomScreen( { route } ) {
   const navigation = useNavigation();  
   const [rooms, setRooms] = useState([]);
-  const { category, employee, building } = route.params;
-  console.log("BUILDIGGGGGG ", building)
-
+  const { building } = route.params;
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
-        const data = await response.json();
-        const categoryFound = data.find(cat => cat.name === category.name);
-        const employeeFound = categoryFound.employees.find(emp => emp.id === employee.id)
-        const buildingFound = employeeFound.buildings.find(build => build.id === building.id)
-        setRooms(buildingFound.rooms);
+        setRooms(building.rooms);
       } catch (error) {
         console.error(error);
       }
@@ -53,7 +47,7 @@ function RoomScreen( { route } ) {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Fotos', { category, employee, building, room: item })}
+              onPress={() => navigation.navigate('Fotos', { room: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}
