@@ -6,6 +6,7 @@
                 "id": "1",
                 "name": "Joao",
                 "password": "password1",
+                "isAdmin": true,
                 "buildings": [
                     {
                         "id": "1",
@@ -59,6 +60,7 @@
                 "id": "2",
                 "name": "Pedro",
                 "password": "password2",
+                "isAdmin": false,
                 "buildings": [
                     {
                         "id": "2",

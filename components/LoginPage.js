@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
-import AsyncStorage  from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -22,39 +22,48 @@ const styles = StyleSheet.create({
     },
 });
 
-const users = [
-    { id: 'admin', password: 'password1' },
-    { id: 'user1', password: 'password1' },
-    { id: 'user2', password: 'password2' },
-];
-
 function LoginPage() {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigation = useNavigation();
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+            const data = await response.json();
+            let allUsers = data.reduce((acc, cat) => {
+                return acc.concat(cat.employees);
+            }, []);
+            let user = allUsers.find(u => u.id === id);
+            if (user.id !== id) {
+                setError('Invalid ID');
+                return;
+            }
+
+            if (user.password !== password) {
+                setError('Incorrect password');
+                return;
+            }
+
+            setError('');
+            AsyncStorage.setItem('id', id);
+            AsyncStorage.setItem('password', password);
+            console.log('Logged in successfully');
+
+            if (user.isAdmin) {
+                navigation.navigate('Categorias');
+            } else {
+                navigation.navigate('Rotas');
+            }
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const handleLogin = () => {
-        const user = users.find(u => u.id === id);
-
-        if (!user) {
-            setError('Invalid ID');
-            return;
-        }
-
-        if (user.password !== password) {
-            setError('Incorrect password');
-            return;
-        }
-
-        setError('');
-        AsyncStorage.setItem('id', id);
-        AsyncStorage.setItem('password', password);
-        console.log('Logged in successfully');
-        if(user.id == 'admin') {
-            navigation.navigate('Categorias');
-        } else {
-            navigation.navigate('Rotas');
-        }
+        fetchData();
     };
 
     return (
