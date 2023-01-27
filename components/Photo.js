@@ -9,7 +9,7 @@ function Photo({ item }) {
             <TouchableOpacity onPress={() => setModalVisible(true)}>
                 <Image
                     source={{ uri: item.content }}
-                    style={{ width: 200, height: 200 }}
+                    style={{ width: 160, height: 160 }}
                 />
             </TouchableOpacity>
             <Modal
@@ -20,6 +20,10 @@ function Photo({ item }) {
             >
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                        <Image
+                            source={{ uri: item.content }}
+                            style={{ width: 340, height: 340 }}
+                        />
                         <Text>Data: {item.date}</Text>
                         <Text>Descrição: {item.description}</Text>
                         <Button title="Fechar" onPress={() => setModalVisible(false)} />

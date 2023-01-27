@@ -52,7 +52,12 @@ function EmployeesScreen({ route }) {
           )}
           keyExtractor={item => item.id.toString()}
         />
-        <Button title="Ver Prédios" onPress={() => navigation.navigate('Todos Prédios', { category })} />
+        <View style={{ margin: 40 }}>
+          <Button
+            title="Ver Prédios"
+            onPress={() => navigation.navigate('Todos Prédios', { category })}
+          />
+        </View>
       </View>
     </View>
   );

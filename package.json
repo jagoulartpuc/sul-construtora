@@ -10,15 +10,15 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
-    "@react-native-firebase/app": "^16.5.2",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/stack": "^6.3.11",
+    "deprecated-react-native-prop-types": "^4.0.0",
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
-    "firebase": "^9.16.0",
     "react": "^18.1.0",
     "react-native": "0.70.5",
-    "react-native-mongodb": "^1.0.0"
+    "react-native-camera": "^4.2.1",
+    "expo-camera": "~13.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

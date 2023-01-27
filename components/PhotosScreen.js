@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import Photo from './Photo'
+import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,6 +13,7 @@ const styles = StyleSheet.create({
   flatListContainer: {
     alignSelf: 'center',
     width: '80%',
+    marginBottom: 100
   },
   plusButton: {
     position: 'absolute',
@@ -30,17 +32,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 10,
+
   },
   tableText: {
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  buttonContainer: {
+    backgroundColor: '#fff',
+    alignSelf: 'flex-end'
+  },
+  preview: {
+    alignSelf: 'stretch',
+    flex: 1
   }
 });
 
 function PhotosScreen({ route }) {
   const [photos, setPhotos] = useState([]);
   const { room } = route.params;
+  const navigation = useNavigation();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -54,19 +70,19 @@ function PhotosScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      
       <View style={styles.flatListContainer}>
-      <FlatList
+        <FlatList
           data={room.checkings}
           numColumns={3}
           renderItem={({ item }) => (
             <View style={styles.tableRow}>
-              <Text style={styles.tableText}>-{item}</Text>
+              <Text style={styles.tableText}> {item} </Text>
             </View>
           )}
         />
         <FlatList
           data={photos}
+          numColumns={2}
           renderItem={({ item }) => (
             <Photo item={item} />
           )}
@@ -75,9 +91,7 @@ function PhotosScreen({ route }) {
       </View>
       <TouchableOpacity
         style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
-        onPress={() => {
-          // Open camera code here
-        }}
+        onPress={() => navigation.navigate('Camera')}
       >
         <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
       </TouchableOpacity>

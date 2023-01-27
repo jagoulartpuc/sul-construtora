@@ -13,14 +13,32 @@ const styles = StyleSheet.create({
   flatListContainer: {
     alignSelf: 'center',
     width: '80%',
+    marginBottom: 200,
   },
-});
+  tableRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    borderWidth: 2,
+    borderColor: 'black',
+    borderRadius: 10,
 
-const data = [
-  { id: 1, name: 'Atividade 1' },
-  { id: 2, name: 'Atividade 2' },
-  { id: 3, name: 'Atividade 3' }
-];
+  },
+  tableText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  taskText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    margin: 20,
+    marginTop: 60
+  }
+});
 
 function Item({ name, onPress }) {
   return (
@@ -82,14 +100,17 @@ function RoutesScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
+        <Text style={styles.taskText}>Tarefas</Text>
         <FlatList
           data={routes}
+          numColumns={3}
           renderItem={({ item }) => (
-            <Item
-              name={item}
-            />
+            <View style={styles.tableRow}>
+              <Text style={styles.tableText}> {item} </Text>
+            </View>
           )}
         />
+        <Text style={styles.taskText}> Salas </Text>
         <FlatList
           data={rooms}
           renderItem={({ item }) => (
