@@ -23,16 +23,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  tableRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+  },
+  tableText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
-
-function Item({ name, onPress }) {
-  return (
-    <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-      <Text onPress={onPress}>{name}</Text>
-    </View>
-  );
-}
 
 function PhotosScreen({ route }) {
   const [photos, setPhotos] = useState([]);
@@ -50,7 +54,17 @@ function PhotosScreen({ route }) {
 
   return (
     <View style={styles.container}>
+      
       <View style={styles.flatListContainer}>
+      <FlatList
+          data={room.checkings}
+          numColumns={3}
+          renderItem={({ item }) => (
+            <View style={styles.tableRow}>
+              <Text style={styles.tableText}>-{item}</Text>
+            </View>
+          )}
+        />
         <FlatList
           data={photos}
           renderItem={({ item }) => (

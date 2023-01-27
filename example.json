@@ -19,6 +19,7 @@
                             {
                                 "id": 1,
                                 "name": "Sala 1",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 1,
@@ -37,6 +38,7 @@
                             {
                                 "id": 2,
                                 "name": "Sala 2",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 3,
@@ -73,6 +75,7 @@
                             {
                                 "id": 1,
                                 "name": "Sala 2",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 5,
@@ -90,7 +93,8 @@
                             },
                             {
                                 "id": 2,
-                                "name": "Sala 2",
+                                "name": "Sala 3",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 7,
@@ -119,6 +123,7 @@
                             {
                                 "id": 3,
                                 "name": "Sala 3",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 7,
@@ -137,6 +142,7 @@
                             {
                                 "id": 4,
                                 "name": "Sala 4",
+                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
                                 "photo": [
                                     {
                                         "id": 9,

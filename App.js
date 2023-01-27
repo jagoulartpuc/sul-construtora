@@ -7,6 +7,7 @@ import RoomScreen from './components/RoomScreen';
 import PhotosScreen from './components/PhotosScreen';
 import LoginPage from './components/LoginPage';
 import RoutesScreen from './components/RoutesScreen';
+import AllBuildingScreen from './components/AllBuildingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ function App() {
         <Stack.Screen name="Prédios" component={BuildingScreen} />
         <Stack.Screen name="Salas" component={RoomScreen} />
         <Stack.Screen name="Fotos" component={PhotosScreen} />
+        <Stack.Screen name="Todos Prédios" component={AllBuildingScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

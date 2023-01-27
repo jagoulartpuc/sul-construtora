@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -15,6 +15,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const getAllBuildings = (category) => {
+    let buildings = []
+    category.employees.forEach(emp => buildings.push(...emp.buildings));
+    return buildings;
+}
+
+
 function Item({ name, onPress }) {
   return (
     <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
@@ -23,15 +30,16 @@ function Item({ name, onPress }) {
   );
 }
 
-function EmployeesScreen({ route }) {
+function AllBuildingScreen({ route }) {
   const navigation = useNavigation();
-  const [employees, setEmployees] = useState([]);
+  const [buildings, setBuildings] = useState([]);
   const { category } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setEmployees(category.employees);
+        const allBuildings = getAllBuildings(category);
+        setBuildings(allBuildings);
       } catch (error) {
         console.error(error);
       }
@@ -43,19 +51,18 @@ function EmployeesScreen({ route }) {
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={employees}
+          data={buildings}
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Prédios', { employee: item })}
+              onPress={() => navigation.navigate('Salas', { building: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}
         />
-        <Button title="Ver Prédios" onPress={() => navigation.navigate('Todos Prédios', { category })} />
       </View>
     </View>
   );
 }
 
-export default EmployeesScreen;
+export default AllBuildingScreen;
