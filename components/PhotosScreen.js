@@ -91,7 +91,7 @@ function PhotosScreen({ route }) {
       </View>
       <TouchableOpacity
         style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
-        onPress={() => navigation.navigate('Camera')}
+        onPress={() => navigation.navigate('Camera', { room: room })}
       >
         <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
       </TouchableOpacity>
