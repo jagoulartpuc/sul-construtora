@@ -21,7 +21,6 @@ const getAllBuildings = (category) => {
     return buildings;
 }
 
-
 function Item({ name, onPress }) {
   return (
     <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>

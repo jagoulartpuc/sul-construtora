@@ -52,6 +52,18 @@ const styles = StyleSheet.create({
   }
 });
 
+function getAllRooms(categories) {
+  let rooms = [];
+  for (const category of categories) {
+    for (const employee of category.employees) {
+      for (const building of employee.buildings) {
+        rooms = rooms.concat(building.rooms);
+      }
+    }
+  }
+  return rooms;
+}
+
 function PhotosScreen({ route }) {
   const [photos, setPhotos] = useState([]);
   const { room } = route.params;
@@ -60,7 +72,9 @@ function PhotosScreen({ route }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setPhotos(room.photo);
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+        const data = await response.json();
+        setPhotos(getAllRooms(data).find(rm => rm.id === room.id).photo);
       } catch (error) {
         console.error(error);
       }

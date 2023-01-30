@@ -1,12 +1,18 @@
-import { View, Button } from 'react-native';
+import { View, Button, TextInput, Modal, Text } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native';
 
 function CustomCamera({ route }) {
     const [hasPermission, setHasPermission] = useState(null);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [text, onChangeText] = useState('');
+    const [token, setToken] = useState('');
+    const [imageName, setImageName] = useState('');
     const { room } = route.params;
     const camRef = useRef();
+    const navigation = useNavigation();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -21,17 +27,20 @@ function CustomCamera({ route }) {
         fetchData();
     }, []);
 
-    const updateObject = async (imageName, json) => {
+    const updateObject = async (imageName, token, text) => {
         const url = 'https://sul-construtora-default-rtdb.firebaseio.com/categories.json';
         const id = await (AsyncStorage.getItem('id'));
         const responseCat = await fetch(url);
         const categories = await responseCat.json();
-        console.log('catet', categories)
+        console.log('catet', categories);
+        const date = new Date();
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        const formattedDate = date.toLocaleDateString('en-GB', options);
         const newPhoto = {
             id: imageName,
-            description: "fdsfsd",
-            date: new Date().toLocaleDateString(),
-            content: "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/" + imageName + "?alt=media&token=" + json.downloadTokens
+            description: text,
+            date: formattedDate,
+            content: "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/" + imageName + "?alt=media&token=" + token
         }
         const roomId = room.id;
         let newCategories = categories.map(cat => {
@@ -51,11 +60,13 @@ function CustomCamera({ route }) {
             method: "PUT",
             body: JSON.stringify(newCategories),
             headers: headers
-          })
+        })
             .then(res => res.json())
             .then(json => console.log("RESPONSEEE", json))
             .catch(error => console.error(error));
-    }    
+        setModalVisible(false);
+        navigation.navigate('Fotos', { room: room })
+    }
 
     async function takePicture() {
         try {
@@ -80,7 +91,9 @@ function CustomCamera({ route }) {
 
                 const json = await res.json();
                 console.log(json)
-                updateObject(imageName, json);
+                setToken(json.downloadTokens);
+                setImageName(imageName);
+                setModalVisible(true);
                 return json;
             }
         } catch (error) {
@@ -100,6 +113,29 @@ function CustomCamera({ route }) {
                 ref={camRef}
             />
             <Button title="Tirar Foto" onPress={takePicture} />
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)}
+            >
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                        <Text> Escreva o que foi feito: </Text>
+                        <TextInput
+                            style={{
+                                height: 40,
+                                margin: 12,
+                                borderWidth: 1,
+                                padding: 10
+                            }}
+                            onChangeText={onChangeText}
+                            value={text}
+                        />
+                        <Button title="Continuar" onPress={() => updateObject(imageName, token, text)} />
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }
