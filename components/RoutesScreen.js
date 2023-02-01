@@ -48,48 +48,17 @@ function Item({ name, onPress }) {
   );
 }
 
-const getTasksByEmployee = (employees, employeeId) => {
-  let tasks = [];
-  employees.forEach((employee) => {
-    if (employee.id && employee.id === employeeId) {
-      employee.buildings.forEach((building) => {
-        tasks = tasks.concat(building.tasks);
-      });
-    }
-  });
-  return tasks;
-}
-
-const getRoomsByEmployee = (employees, employeeId) => {
-  let rooms = [];
-  employees.forEach((employee) => {
-    if (employee.id && employee.id === employeeId) {
-      employee.buildings.forEach((building) => {
-        rooms = rooms.concat(building.rooms);
-      });
-    }
-  });
-  return rooms;
-}
-
-function RoutesScreen() {
+function RoutesScreen( { route }) {
   const navigation = useNavigation();
   const [routes, setRoutes] = useState([]);
   const [rooms, setRooms] = useState([]);
+  const { building } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
-        const data = await response.json();
-        let employees = data.reduce((acc, cat) => {
-          return acc.concat(cat.employees);
-        }, []);
-        const id = await (AsyncStorage.getItem('id'));
-        const tasks = getTasksByEmployee(employees, id)
-        const roomsFound = getRoomsByEmployee(employees, id)
-        setRoutes(tasks);
-        setRooms(roomsFound);
+        setRoutes(building.tasks);
+        setRooms(building.rooms);
       } catch (error) {
         console.error(error);
       }
@@ -116,7 +85,7 @@ function RoutesScreen() {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Fotos', { room: item })}
+              onPress={() => navigation.navigate('Serviços', { room: item })}
             />
           )}
           keyExtractor={item => item.id.toString()}

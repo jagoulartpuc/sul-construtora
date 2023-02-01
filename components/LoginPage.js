@@ -30,12 +30,9 @@ function LoginPage() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+            const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
             const data = await response.json();
-            let allUsers = data.reduce((acc, cat) => {
-                return acc.concat(cat.employees);
-            }, []);
-            let user = allUsers.find(u => u.id === id);
+            let user = data.find(u => u.id === id);
             if (user.id !== id) {
                 setError('Invalid ID');
                 return;
@@ -52,9 +49,9 @@ function LoginPage() {
             console.log('Logged in successfully');
 
             if (user.isAdmin) {
-                navigation.navigate('Categorias');
+                navigation.navigate('Funcionários');
             } else {
-                navigation.navigate('Rotas');
+                navigation.navigate('Prédios', { employee: user });
             }
 
         } catch (error) {

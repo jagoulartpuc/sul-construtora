@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import Photo from './Photo'
 import { useNavigation } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
@@ -42,39 +41,34 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  buttonContainer: {
-    backgroundColor: '#fff',
-    alignSelf: 'flex-end'
-  },
   preview: {
     alignSelf: 'stretch',
     flex: 1
   }
 });
 
-function getAllRooms(categories) {
+function getAllRooms(employees) {
   let rooms = [];
-  for (const category of categories) {
-    for (const employee of category.employees) {
-      for (const building of employee.buildings) {
-        rooms = rooms.concat(building.rooms);
-      }
+  for (const employee of employees.filter(emp => !emp.isAdmin)) {
+    for (const building of employee.buildings) {
+      rooms = rooms.concat(building.rooms);
     }
   }
+
   return rooms;
 }
 
-function PhotosScreen({ route }) {
-  const [photos, setPhotos] = useState([]);
+function ServicesScreen({ route }) {
+  const [services, setServices] = useState([]);
   const { room } = route.params;
   const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/categories.json');
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
         const data = await response.json();
-        setPhotos(getAllRooms(data).find(rm => rm.id === room.id).photo);
+        setServices(getAllRooms(data).find(rm => rm.id === room.id).services);
       } catch (error) {
         console.error(error);
       }
@@ -86,31 +80,25 @@ function PhotosScreen({ route }) {
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={room.checkings}
+          data={services}
           numColumns={3}
           renderItem={({ item }) => (
             <View style={styles.tableRow}>
-              <Text style={styles.tableText}> {item} </Text>
+              <Text style={styles.tableText}> {item.task} </Text>
             </View>
           )}
         />
-        <FlatList
-          data={photos}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <Photo item={item} />
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
       </View>
-      <TouchableOpacity
-        style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
-        onPress={() => navigation.navigate('Camera', { room: room })}
-      >
-        <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
-      </TouchableOpacity>
+      <View style={styles.container}>
+        <TouchableOpacity
+          style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
+          onPress={() => navigation.navigate('Camera', { room: room })}
+        >
+          <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
-export default PhotosScreen;
+export default ServicesScreen;

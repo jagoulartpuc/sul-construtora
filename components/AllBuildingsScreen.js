@@ -15,9 +15,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const getAllBuildings = (category) => {
+const getAllBuildings = (employees) => {
     let buildings = []
-    category.employees.forEach(emp => buildings.push(...emp.buildings));
+    employees.forEach(emp => buildings.push(...emp.buildings));
     return buildings;
 }
 
@@ -32,12 +32,12 @@ function Item({ name, onPress }) {
 function AllBuildingScreen({ route }) {
   const navigation = useNavigation();
   const [buildings, setBuildings] = useState([]);
-  const { category } = route.params;
+  const { employees } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const allBuildings = getAllBuildings(category);
+        const allBuildings = getAllBuildings(employees);
         setBuildings(allBuildings);
       } catch (error) {
         console.error(error);

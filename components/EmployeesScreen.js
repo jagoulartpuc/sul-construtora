@@ -23,15 +23,16 @@ function Item({ name, onPress }) {
   );
 }
 
-function EmployeesScreen({ route }) {
+function EmployeesScreen() {
   const navigation = useNavigation();
   const [employees, setEmployees] = useState([]);
-  const { category } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setEmployees(category.employees);
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
+        const data = await response.json();
+        setEmployees(data.filter(emp => !emp.isAdmin));
       } catch (error) {
         console.error(error);
       }
@@ -55,7 +56,7 @@ function EmployeesScreen({ route }) {
         <View style={{ margin: 40 }}>
           <Button
             title="Ver Prédios"
-            onPress={() => navigation.navigate('Todos Prédios', { category })}
+            onPress={() => navigation.navigate('Todos Prédios', { employees })}
           />
         </View>
       </View>

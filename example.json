@@ -1,186 +1,211 @@
 [
     {
-        "name": "Category 1",
-        "employees": [
+        "id": "1",
+        "name": "Joao",
+        "password": "password1",
+        "isAdmin": true,
+        "buildings": [ {"id": 100}
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Pedro",
+        "password": "password2",
+        "isAdmin": false,
+        "buildings": [
             {
                 "id": "1",
-                "name": "Joao",
-                "password": "password1",
-                "isAdmin": true,
-                "buildings": [
+                "name": "Prédio 1",
+                "rooms": [
                     {
-                        "id": "1",
-                        "name": "Prédio 1",
-                        "tasks": [
-                            "Limpar sala 1",
-                            "Trocar o ar"
-                        ],
-                        "rooms": [
+                        "id": 1,
+                        "name": "Sala 1",
+                        "services": [
                             {
                                 "id": 1,
-                                "name": "Sala 1",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2", "Tirar foto 2", "Tirar foto 2", "Tirar foto 2", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 1,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 2,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 3,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 4,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 5,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 6,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
                             },
                             {
                                 "id": 2,
-                                "name": "Sala 2",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 3,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 4,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "2",
-                "name": "Pedro",
-                "password": "password2",
-                "isAdmin": false,
-                "buildings": [
-                    {
-                        "id": "2",
-                        "name": "Prédio 2",
-                        "tasks": [
-                            "Limpar sala 2",
-                            "Trocar o ar"
-                        ],
-                        "rooms": [
-                            {
-                                "id": 1,
-                                "name": "Sala 2",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 5,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 6,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
                             },
                             {
-                                "id": 2,
-                                "name": "Sala 3",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 7,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 8,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva",
+                                "description": "feito isso",
+                                "date": "25/01/2023",
+                                "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
                             }
                         ]
                     },
                     {
-                        "id": "3",
-                        "name": "Prédio 3",
-                        "tasks": [
-                            "Limpar sala 3",
-                            "Trocar o ar"
-                        ],
-                        "rooms": [
+                        "id": 2,
+                        "name": "Sala 2",
+                        "services": [
                             {
-                                "id": 3,
-                                "name": "Sala 3",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 7,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 8,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
+                                "id": 1,
+                                "task": "predio 1 - Vazamento de água - Corretiva"
                             },
                             {
-                                "id": 4,
-                                "name": "Sala 4",
-                                "checkings": ["Tirar foto 1", "Tirar foto 2"],
-                                "photo": [
-                                    {
-                                        "id": 9,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    },
-                                    {
-                                        "id": 10,
-                                        "description": "feito isso",
-                                        "date": "25/01/2023",
-                                        "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
-                                    }
-                                ]
+                                "id": 2,
+                                "task": "predio 1 - Vazamento de água - Corretiva"
+                            },
+                            {
+                                "id": 3,
+                                "task": "predio 1 - Vazamento de água - Corretiva"
                             }
                         ]
                     }

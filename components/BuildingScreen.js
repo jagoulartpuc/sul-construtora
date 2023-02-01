@@ -27,7 +27,6 @@ function BuildingScreen({ route }) {
   const navigation = useNavigation();
   const [buildings, setBuildings] = useState([]);
   const { employee } = route.params;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,7 +46,7 @@ function BuildingScreen({ route }) {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Salas', { building: item })}
+              onPress={() => { navigation.navigate('Salas', { building: item }) }}
             />
           )}
           keyExtractor={item => item.id.toString()}

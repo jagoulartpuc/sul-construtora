@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,10 +28,16 @@ function RoomScreen( { route } ) {
   const navigation = useNavigation();  
   const [rooms, setRooms] = useState([]);
   const { building } = route.params;
+  const [isAdmin, setIsAdmin] = useState(false);
   
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
+        const data = await response.json();
+        const id = await (AsyncStorage.getItem('id'));
+        let user = data.find(emp => emp.id === id);
+        setIsAdmin(user.isAdmin);
         setRooms(building.rooms);
       } catch (error) {
         console.error(error);
@@ -47,7 +54,13 @@ function RoomScreen( { route } ) {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => navigation.navigate('Fotos', { room: item })}
+              onPress={() => {
+                if (isAdmin) {
+                  navigation.navigate('Serviços Admin', { room: item });
+                } else {
+                  navigation.navigate('Serviços', { room: item });
+                }
+              }}
             />
           )}
           keyExtractor={item => item.id.toString()}

@@ -8,6 +8,7 @@ function CustomCamera({ route }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [text, onChangeText] = useState('');
+    const [date, setDate] = useState('');
     const [token, setToken] = useState('');
     const [imageName, setImageName] = useState('');
     const { room } = route.params;
@@ -27,38 +28,47 @@ function CustomCamera({ route }) {
         fetchData();
     }, []);
 
-    const updateObject = async (imageName, token, text) => {
-        const url = 'https://sul-construtora-default-rtdb.firebaseio.com/categories.json';
+    const handleDateChange = (dateText) => {
+        let formattedDate = '';
+    
+        if (dateText.length === 2 || dateText.length === 5) {
+          formattedDate = `${dateText}/`;
+        } else {
+          formattedDate = dateText;
+        }
+    
+        setDate(formattedDate);
+      };
+
+    const updateObject = async (imageName, token, text, date) => {
+        const url = 'https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json';
         const id = await (AsyncStorage.getItem('id'));
         const responseCat = await fetch(url);
-        const categories = await responseCat.json();
-        console.log('catet', categories);
-        const date = new Date();
-        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-        const formattedDate = date.toLocaleDateString('en-GB', options);
+        const employees = await responseCat.json();
+        console.log('catet', employees);
         const newPhoto = {
             id: imageName,
             description: text,
-            date: formattedDate,
+            date: date,
             content: "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/" + imageName + "?alt=media&token=" + token
         }
         const roomId = room.id;
-        let newCategories = categories.map(cat => {
-            let employee = cat.employees.find(emp => emp.id === id);
+        let newEmployees = () => {
+            let employee = employees.find(emp => emp.id === id);
             if (employee) {
                 employee.buildings.forEach(build => {
                     let room = build.rooms.find(room => room.id === roomId);
                     if (room) {
-                        room.photo.push(newPhoto);
+                        room.services.push(newPhoto);
                     }
                 });
             }
-            return cat;
-        });
+            return emp;
+        };
         const headers = { "Content-Type": "application/json" };
         fetch(url, {
             method: "PUT",
-            body: JSON.stringify(newCategories),
+            body: JSON.stringify(newEmployees()),
             headers: headers
         })
             .then(res => res.json())
@@ -132,7 +142,19 @@ function CustomCamera({ route }) {
                             onChangeText={onChangeText}
                             value={text}
                         />
-                        <Button title="Continuar" onPress={() => updateObject(imageName, token, text)} />
+                        <Text> Selecione a data do serviço: </Text>
+                        <TextInput
+                            keyboardType='numeric'
+                            style={{
+                                height: 40,
+                                margin: 12,
+                                borderWidth: 1,
+                                padding: 10
+                            }}
+                            onChangeText={(dateText) => handleDateChange(dateText)}
+                            value={date}
+                        />
+                        <Button title="Continuar" onPress={() => updateObject(imageName, token, text, date)} />
                     </View>
                 </View>
             </Modal>
