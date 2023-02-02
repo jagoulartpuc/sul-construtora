@@ -15,7 +15,7 @@ function Service({ item }) {
     return (
         <View>
             <Item
-                name={item.task + ": " + item.date}
+                name={item.task + " - "+ item.type + ": " + item.date}
                 onPress={() => { setModalVisible(true) }}
             />
             <Modal

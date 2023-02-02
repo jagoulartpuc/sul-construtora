@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Modal, TextInput, Button } from 'react-native';
 import Service from './Service'
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const styles = StyleSheet.create({
     container: {
@@ -67,6 +68,8 @@ const styles = StyleSheet.create({
     }
 });
 
+const serviceTypes = ["Corretiva", "Preventiva"];
+
 function getAllRooms(employees) {
     let rooms = [];
     for (const employee of employees.filter(emp => !emp.isAdmin)) {
@@ -83,6 +86,21 @@ function ServicesScreen({ route }) {
     const { room } = route.params;
     const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState('');
+    const [selected, setSelected] = React.useState("");
+
+    function filterServices(selected, date) { 
+        let newServices = []
+        if (date === '') {
+            newServices = services.filter(ser => ser.type.toUpperCase() === selected.toUpperCase())
+        } else if (selected === '') {
+            newServices = services.filter(ser => ser.date.toUpperCase() === date.toUpperCase())
+        } else {
+            newServices = services.filter(ser => ser.type.toUpperCase() === selected.toUpperCase())
+                .filter(ser => ser.date.toUpperCase() === date.toUpperCase())
+        }
+        setServices(newServices);
+        setModalVisible(false)
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -150,18 +168,12 @@ function ServicesScreen({ route }) {
                             value={date}
                         />
                         <Text> Tipo do serviço: </Text>
-                        <TextInput
-                            keyboardType='numeric'
-                            style={{
-                                height: 40,
-                                margin: 12,
-                                borderWidth: 1,
-                                padding: 10
-                            }}
-                            onChangeText={(dateText) => handleDateChange(dateText)}
-                            value={date}
+                        <SelectList
+                            setSelected={(val) => setSelected(val)}
+                            data={serviceTypes}
+                            save="value"
                         />
-                        <Button title="Continuar" onPress={() => setModalVisible(false)} />
+                        <Button title="Continuar" onPress={() => filterServices(selected, date)} />
                     </View>
                 </View>
             </Modal>

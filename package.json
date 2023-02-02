@@ -14,11 +14,12 @@
     "@react-navigation/stack": "^6.3.11",
     "deprecated-react-native-prop-types": "^4.0.0",
     "expo": "~47.0.12",
+    "expo-camera": "~13.1.0",
     "expo-status-bar": "~1.4.2",
     "react": "^18.1.0",
     "react-native": "0.70.5",
     "react-native-camera": "^4.2.1",
-    "expo-camera": "~13.1.0"
+    "react-native-dropdown-select-list": "^2.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
