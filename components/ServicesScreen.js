@@ -99,6 +99,7 @@ function ServicesScreen({ route }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [tasks, setTasks] = useState([]);
+  let avaliableTasks = tasks.filter(task => task.avaliable);
 
   function OpenModal({ checks, modalVisible, setModalVisible }) {
     return (
@@ -142,7 +143,7 @@ function ServicesScreen({ route }) {
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={tasks}
+          data={avaliableTasks}
           renderItem={({ item }) => (
             <Item
               name={item.name}

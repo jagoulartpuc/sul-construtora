@@ -25,11 +25,13 @@
                         "name": "Sala 1",
                         "tasks": [
                             {
+                                "id": 1,
                                 "name": "Limpar a bunda",
                                 "type": "corretiva",
                                 "avaliable": true
                             },
                             {
+                                "id": 2,
                                 "name": "Limpar a bunda 2",
                                 "type": "corretiva",
                                 "avaliable": true

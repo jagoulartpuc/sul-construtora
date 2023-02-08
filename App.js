@@ -9,6 +9,7 @@ import RoutesScreen from './components/RoutesScreen';
 import AllBuildingScreen from './components/AllBuildingsScreen';
 import CustomCamera from './components/CustomCamera';
 import ServicesAdminScreen from './components/ServicesAdminScreen';
+import TasksScreen from './components/TasksScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,7 +26,7 @@ function App() {
         <Stack.Screen name="Serviços Admin" component={ServicesAdminScreen} />
         <Stack.Screen name="Todos Prédios" component={AllBuildingScreen} />
         <Stack.Screen name="Camera" component={CustomCamera} />
-
+        <Stack.Screen name="Tarefas" component={TasksScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
