@@ -84,12 +84,21 @@ function getAllRooms(employees) {
   return rooms;
 }
 
+function Item({ name, onPress }) {
+  return (
+    <View style={{ padding: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+      <Text onPress={onPress}>{name}</Text>
+    </View>
+  );
+}
+
 function ServicesScreen({ route }) {
   const [services, setServices] = useState([]);
   const { room } = route.params;
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [tasks, setTasks] = useState([]);
 
   function OpenModal({ checks, modalVisible, setModalVisible }) {
     return (
@@ -100,7 +109,7 @@ function ServicesScreen({ route }) {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: 'white', width: 300, height: 400, padding: 20, borderRadius: 10 }}>
+          <View style={{ backgroundColor: 'white', width: 300, height: 400, padding: 20, borderRadius: 10 }}>
             <FlatList
               data={checks}
               renderItem={({ item }) => (
@@ -119,7 +128,9 @@ function ServicesScreen({ route }) {
       try {
         const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
         const data = await response.json();
+        console.log(room)
         setServices(getAllRooms(data).find(rm => rm.id === room.id).services);
+        setTasks(room.tasks)
       } catch (error) {
         console.error(error);
       }
@@ -131,13 +142,14 @@ function ServicesScreen({ route }) {
     <View style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
-          data={services}
-          numColumns={3}
+          data={tasks}
           renderItem={({ item }) => (
-            <View style={styles.tableRow}>
-              <Text style={styles.tableText}> {item.task} </Text>
-            </View>
+            <Item
+              name={item.name}
+              onPress={() => navigation.navigate('Camera', { room: room, task: item.name })}
+            />
           )}
+          keyExtractor={item => item.name.toString()}
         />
         <TouchableOpacity
           style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
@@ -150,21 +162,13 @@ function ServicesScreen({ route }) {
         {modalVisible && <OpenModal checks={correctivesChecks} modalVisible={modalVisible} setModalVisible={setModalVisible} />}
         <TouchableOpacity
           style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
-          onPress={() => {setModalVisible2(true)}}
+          onPress={() => { setModalVisible2(true) }}
         >
           <View style={styles.filterIconContainer}>
             <Text style={styles.filterText}>Ver checagens preventivas</Text>
           </View>
         </TouchableOpacity>
         {modalVisible2 && <OpenModal checks={preventivesChecks} modalVisible={modalVisible2} setModalVisible={setModalVisible2} />}
-      </View>
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={[styles.plusButton, { borderRadius: 25, backgroundColor: '#0077C9' }]}
-          onPress={() => navigation.navigate('Camera', { room: room })}
-        >
-          <Text style={{ color: 'white', fontSize: 30 }}>+</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

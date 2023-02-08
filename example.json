@@ -4,7 +4,10 @@
         "name": "Joao",
         "password": "password1",
         "isAdmin": true,
-        "buildings": [ {"id": 100}
+        "buildings": [
+            {
+                "id": 100
+            }
         ]
     },
     {
@@ -20,6 +23,18 @@
                     {
                         "id": 1,
                         "name": "Sala 1",
+                        "tasks": [
+                            {
+                                "name": "Limpar a bunda",
+                                "type": "corretiva",
+                                "avaliable": true
+                            },
+                            {
+                                "name": "Limpar a bunda 2",
+                                "type": "corretiva",
+                                "avaliable": true
+                            }
+                        ],
                         "services": [
                             {
                                 "id": 1,
@@ -37,28 +52,13 @@
                                 "date": "25/01/2023",
                                 "content": "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/ben10.jpg?alt=media&token=ccf6718e-2271-432e-889c-bd33503a5a5f"
                             }
-                          
                         ]
                     },
                     {
                         "id": 2,
                         "name": "Sala 2",
                         "services": [
-                            {
-                                "id": 1,
-                                "task": "predio 1 - Vazamento de água",
-                                "type": "corretiva"
-                            },
-                            {
-                                "id": 2,
-                                "task": "predio 1 - Vazamento de água",
-                                "type": "corretiva"
-                            },
-                            {
-                                "id": 3,
-                                "task": "predio 1 - Vazamento de água",
-                                "type": "corretiva"
-                            }
+                           
                         ]
                     }
                 ]

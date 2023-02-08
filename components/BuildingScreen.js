@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Modal, TextInput, Button, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { SelectList } from 'react-native-dropdown-select-list'
 
 const styles = StyleSheet.create({
   container: {
@@ -12,7 +13,7 @@ const styles = StyleSheet.create({
   flatListContainer: {
     alignSelf: 'center',
     width: '80%',
-  },
+  }
 });
 
 function Item({ name, onPress }) {
@@ -27,6 +28,7 @@ function BuildingScreen({ route }) {
   const navigation = useNavigation();
   const [buildings, setBuildings] = useState([]);
   const { employee } = route.params;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,7 +48,7 @@ function BuildingScreen({ route }) {
           renderItem={({ item }) => (
             <Item
               name={item.name}
-              onPress={() => { navigation.navigate('Salas', { building: item }) }}
+              onPress={() => { navigation.navigate('Salas', { building: item, employee: employee }) }}
             />
           )}
           keyExtractor={item => item.id.toString()}

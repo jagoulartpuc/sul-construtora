@@ -32,6 +32,7 @@ function LoginPage() {
         try {
             const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
             const data = await response.json();
+            console.log(data)
             let user = data.find(u => u.id === id);
             if (user.id !== id) {
                 setError('Invalid ID');

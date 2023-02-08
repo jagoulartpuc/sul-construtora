@@ -14,6 +14,27 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: '80%',
   },
+  buttonContainer: {
+    marginTop: 40,
+    position: 'relative',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    paddingHorizontal: 20
+  },
+  filterIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  filterText: {
+    color: 'white',
+    fontSize: 16,
+    marginRight: 10
+  }
 });
 
 function Item({ name, onPress }) {
@@ -24,12 +45,12 @@ function Item({ name, onPress }) {
   );
 }
 
-function RoomScreen( { route } ) {
-  const navigation = useNavigation();  
+function RoomScreen({ route }) {
+  const navigation = useNavigation();
   const [rooms, setRooms] = useState([]);
-  const { building } = route.params;
+  const { building, employee } = route.params;
   const [isAdmin, setIsAdmin] = useState(false);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,7 +77,7 @@ function RoomScreen( { route } ) {
               name={item.name}
               onPress={() => {
                 if (isAdmin) {
-                  navigation.navigate('Serviços Admin', { room: item });
+                  navigation.navigate('Serviços Admin', { room: item, employee: employee });
                 } else {
                   navigation.navigate('Serviços', { room: item });
                 }

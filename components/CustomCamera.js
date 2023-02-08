@@ -11,7 +11,7 @@ function CustomCamera({ route }) {
     const [date, setDate] = useState('');
     const [token, setToken] = useState('');
     const [imageName, setImageName] = useState('');
-    const { room } = route.params;
+    const { room, task } = route.params;
     const camRef = useRef();
     const navigation = useNavigation();
 
@@ -30,15 +30,15 @@ function CustomCamera({ route }) {
 
     const handleDateChange = (dateText) => {
         let formattedDate = '';
-    
+
         if (dateText.length === 2 || dateText.length === 5) {
-          formattedDate = `${dateText}/`;
+            formattedDate = `${dateText}/`;
         } else {
-          formattedDate = dateText;
+            formattedDate = dateText;
         }
-    
+
         setDate(formattedDate);
-      };
+    };
 
     const updateObject = async (imageName, token, text, date) => {
         const url = 'https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json';
@@ -46,36 +46,39 @@ function CustomCamera({ route }) {
         const responseCat = await fetch(url);
         const employees = await responseCat.json();
         console.log('catet', employees);
-        const newPhoto = {
+        const newService = {
             id: imageName,
+            task: task,
+            type: 'Corretiva',
             description: text,
             date: date,
             content: "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/" + imageName + "?alt=media&token=" + token
         }
         const roomId = room.id;
-        let newEmployees = () => {
-            let employee = employees.find(emp => emp.id === id);
-            if (employee) {
-                employee.buildings.forEach(build => {
-                    let room = build.rooms.find(room => room.id === roomId);
-                    if (room) {
-                        room.services.push(newPhoto);
-                    }
-                });
-            }
-            return emp;
-        };
+        let newEmployees =
+            employees.map(emp => {
+                if (emp.id === id) {
+                    emp.buildings.forEach(build => {
+                        let room = build.rooms.find(room => room.id === roomId);
+                        if (room) {
+                            room.services.push(newService);
+                        }
+                    });
+                }
+                return emp;
+            });
+
         const headers = { "Content-Type": "application/json" };
         fetch(url, {
             method: "PUT",
-            body: JSON.stringify(newEmployees()),
+            body: JSON.stringify(newEmployees),
             headers: headers
         })
             .then(res => res.json())
             .then(json => console.log("RESPONSEEE", json))
             .catch(error => console.error(error));
         setModalVisible(false);
-        navigation.navigate('Fotos', { room: room })
+        navigation.navigate('Serviços', { room: room })
     }
 
     async function takePicture() {

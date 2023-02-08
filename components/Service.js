@@ -1,4 +1,4 @@
-import { View, Text, Image, Modal, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Modal, Button } from 'react-native';
 import { useState } from 'react';
 
 function Item({ name, onPress }) {

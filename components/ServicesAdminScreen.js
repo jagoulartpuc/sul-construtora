@@ -43,7 +43,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonContainer: {
-        position: 'absolute',
+        position: 'relative',
+        top: 80,
+        margin: 5,
         bottom: 0,
         left: 0,
         right: 0,
@@ -83,12 +85,15 @@ function getAllRooms(employees) {
 
 function ServicesScreen({ route }) {
     const [services, setServices] = useState([]);
-    const { room } = route.params;
+    const { room, employee } = route.params;
     const [modalVisible, setModalVisible] = useState(false);
     const [date, setDate] = useState('');
-    const [selected, setSelected] = React.useState("");
+    const [selected, setSelected] = useState('');
+    const [modalVisible2, setModalVisible2] = useState(false);
+    const [task, setTask] = useState('');
+    const [selected2, setSelected2] = useState("");
 
-    function filterServices(selected, date) { 
+    function filterServices(selected, date) {
         let newServices = []
         if (date === '') {
             newServices = services.filter(ser => ser.type.toUpperCase() === selected.toUpperCase())
@@ -100,6 +105,41 @@ function ServicesScreen({ route }) {
         }
         setServices(newServices);
         setModalVisible(false)
+    }
+
+    async function insertTask(taskName, selected) {
+        const url = 'https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json';
+        const response = await fetch(url);
+        const employees = await response.json();
+        const task = {
+            name: taskName,
+            type: selected,
+            avaliable: true
+        };
+        let roomdId = room.id;
+        let newEmployees =
+            employees.map(emp => {
+                if (emp.id === employee.id) {
+                    emp.buildings.forEach(build => {
+                        let room = build.rooms.find(room => room.id === roomdId);
+                        if (room) {
+                            room.tasks.push(task);
+                        }
+                    });
+                }
+                return emp;
+            });
+
+        const headers = { "Content-Type": "application/json" };
+        fetch(url, {
+            method: "PUT",
+            body: JSON.stringify(newEmployees),
+            headers: headers
+        })
+            .then(res => res.json())
+            .then(json => console.log("RESPONSEEE", json))
+            .catch(error => console.error(error));
+        setModalVisible2(false);
     }
 
     useEffect(() => {
@@ -132,7 +172,6 @@ function ServicesScreen({ route }) {
             <View style={styles.flatListContainer}>
                 <FlatList
                     data={services}
-                    numColumns={2}
                     renderItem={({ item }) => (
                         <Service item={item} />
                     )}
@@ -174,6 +213,43 @@ function ServicesScreen({ route }) {
                             save="value"
                         />
                         <Button title="Continuar" onPress={() => filterServices(selected, date)} />
+                    </View>
+                </View>
+            </Modal>
+
+            <TouchableOpacity
+                style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
+                onPress={() => { setModalVisible2(true) }}
+            >
+                <View style={styles.filterIconContainer}>
+                    <Text style={styles.filterText}>Criar tarefa para {employee.name}</Text>
+                </View>
+            </TouchableOpacity>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={modalVisible2}
+                onRequestClose={() => setModalVisible2(false)}
+            >
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                        <Text> Tarefa: </Text>
+                        <TextInput
+                            style={{
+                                height: 40,
+                                margin: 12,
+                                borderWidth: 1,
+                                padding: 10
+                            }}
+                            onChangeText={setTask}
+                            value={task}
+                        />
+                        <SelectList
+                            setSelected={(val) => setSelected2(val)}
+                            data={serviceTypes}
+                            save="value"
+                        />
+                        <Button title="Continuar" onPress={() => insertTask(task, selected2)} />
                     </View>
                 </View>
             </Modal>
