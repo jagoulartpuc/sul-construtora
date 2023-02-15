@@ -7,7 +7,7 @@ import uuid from 'react-native-uuid';
 
 const styles = StyleSheet.create({
     container: {
-        
+
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
@@ -94,6 +94,7 @@ function ServicesScreen({ route }) {
     const [task, setTask] = useState('');
     const [selected2, setSelected2] = useState("");
     const navigation = useNavigation();
+    const [employeeNull, setEmployeeNull] = useState(false);
 
     function filterServices(selected, date) {
         let newServices = []
@@ -146,6 +147,10 @@ function ServicesScreen({ route }) {
     }
 
     useEffect(() => {
+        if (employee == undefined) {
+            console.log('heeey')
+            setEmployeeNull(true);
+        }
         const fetchData = async () => {
             try {
                 const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
@@ -181,91 +186,93 @@ function ServicesScreen({ route }) {
                     keyExtractor={item => item.id.toString()}
                 />
             </View>
-            <View style={styles.buttons}>
-                <TouchableOpacity
-                    style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
-                    onPress={() => { setModalVisible(true) }}
-                >
-                    <View style={styles.filterIconContainer}>
-                        <Text style={styles.filterText}>Filtrar</Text>
-                    </View>
-                </TouchableOpacity>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-                            <Text> Data: </Text>
-                            <TextInput
-                                keyboardType='numeric'
-                                style={{
-                                    height: 40,
-                                    margin: 12,
-                                    borderWidth: 1,
-                                    padding: 10
-                                }}
-                                onChangeText={(dateText) => handleDateChange(dateText)}
-                                value={date}
-                            />
-                            <Text> Tipo do serviço: </Text>
-                            <SelectList
-                                setSelected={(val) => setSelected(val)}
-                                data={serviceTypes}
-                                save="value"
-                            />
-                            <Button title="Continuar" onPress={() => filterServices(selected, date)} />
+            {!employeeNull &&
+                <View style={styles.buttons}>
+                    <TouchableOpacity
+                        style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
+                        onPress={() => { setModalVisible(true) }}
+                    >
+                        <View style={styles.filterIconContainer}>
+                            <Text style={styles.filterText}>Filtrar</Text>
                         </View>
-                    </View>
-                </Modal>
+                    </TouchableOpacity>
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}
+                    >
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                                <Text> Data: </Text>
+                                <TextInput
+                                    keyboardType='numeric'
+                                    style={{
+                                        height: 40,
+                                        margin: 12,
+                                        borderWidth: 1,
+                                        padding: 10
+                                    }}
+                                    onChangeText={(dateText) => handleDateChange(dateText)}
+                                    value={date}
+                                />
+                                <Text> Tipo do serviço: </Text>
+                                <SelectList
+                                    setSelected={(val) => setSelected(val)}
+                                    data={serviceTypes}
+                                    save="value"
+                                />
+                                <Button title="Continuar" onPress={() => filterServices(selected, date)} />
+                            </View>
+                        </View>
+                    </Modal>
 
-                <TouchableOpacity
-                    style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
-                    onPress={() => { setModalVisible2(true) }}
-                >
-                    <View style={styles.filterIconContainer}>
-                        <Text style={styles.filterText}>Criar tarefa para {employee.name}</Text>
-                    </View>
-                </TouchableOpacity>
-                <Modal
-                    animationType="fade"
-                    transparent={true}
-                    visible={modalVisible2}
-                    onRequestClose={() => setModalVisible2(false)}
-                >
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-                            <Text> Tarefa: </Text>
-                            <TextInput
-                                style={{
-                                    height: 40,
-                                    margin: 12,
-                                    borderWidth: 1,
-                                    padding: 10
-                                }}
-                                onChangeText={setTask}
-                                value={task}
-                            />
-                            <SelectList
-                                setSelected={(val) => setSelected2(val)}
-                                data={serviceTypes}
-                                save="value"
-                            />
-                            <Button title="Continuar" onPress={() => insertTask(task, selected2)} />
+                    <TouchableOpacity
+                        style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
+                        onPress={() => { setModalVisible2(true) }}
+                    >
+                        <View style={styles.filterIconContainer}>
+                            <Text style={styles.filterText}>Criar tarefa </Text>
                         </View>
-                    </View>
-                </Modal>
-                <TouchableOpacity
-                    style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
-                    onPress={() => { navigation.navigate('Tarefas', { room: room, employee: employee }) }}
-                >
-                    <View style={styles.filterIconContainer}>
-                        <Text style={styles.filterText}>Ver Tarefas</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+                    </TouchableOpacity>
+                    <Modal
+                        animationType="fade"
+                        transparent={true}
+                        visible={modalVisible2}
+                        onRequestClose={() => setModalVisible2(false)}
+                    >
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                            <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+                                <Text> Tarefa: </Text>
+                                <TextInput
+                                    style={{
+                                        height: 40,
+                                        margin: 12,
+                                        borderWidth: 1,
+                                        padding: 10
+                                    }}
+                                    onChangeText={setTask}
+                                    value={task}
+                                />
+                                <SelectList
+                                    setSelected={(val) => setSelected2(val)}
+                                    data={serviceTypes}
+                                    save="value"
+                                />
+                                <Button title="Continuar" onPress={() => insertTask(task, selected2)} />
+                            </View>
+                        </View>
+                    </Modal>
+                    <TouchableOpacity
+                        style={[styles.buttonContainer, { backgroundColor: '#0077C9', borderRadius: 10 }]}
+                        onPress={() => { navigation.navigate('Tarefas', { room: room, employee: employee }) }}
+                    >
+                        <View style={styles.filterIconContainer}>
+                            <Text style={styles.filterText}>Ver Tarefas</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            }
         </View>
     );
 }
