@@ -141,7 +141,6 @@ function ServicesScreen({ route }) {
             headers: headers
         })
             .then(res => res.json())
-            .then(json => console.log("RESPONSEEE", json))
             .catch(error => console.error(error));
         setModalVisible2(false);
     }

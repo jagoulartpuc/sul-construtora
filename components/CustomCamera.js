@@ -1,14 +1,19 @@
 import { View, Button, TextInput, Modal, Text } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { Camera } from 'expo-camera';
+import { SelectList } from 'react-native-dropdown-select-list'
+
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native';
+
+const serviceTypes = ["Corretiva", "Preventiva"];
 
 function CustomCamera({ route }) {
     const [hasPermission, setHasPermission] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [text, onChangeText] = useState('');
     const [date, setDate] = useState('');
+    const [selected, setSelected] = useState('');
     const [token, setToken] = useState('');
     const [imageName, setImageName] = useState('');
     const { room, task } = route.params;
@@ -40,16 +45,15 @@ function CustomCamera({ route }) {
         setDate(formattedDate);
     };
 
-    const updateObject = async (imageName, token, text, date) => {
+    const updateObject = async (imageName, token, text, date, selected) => {
         const url = 'https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json';
         const id = await (AsyncStorage.getItem('id'));
         const responseCat = await fetch(url);
         const employees = await responseCat.json();
-        console.log('catet', employees);
         const newService = {
             id: imageName,
             task: task,
-            type: 'Corretiva',
+            type: selected,
             description: text,
             date: date,
             content: "https://firebasestorage.googleapis.com/v0/b/sul-construtora.appspot.com/o/" + imageName + "?alt=media&token=" + token
@@ -75,7 +79,6 @@ function CustomCamera({ route }) {
             headers: headers
         })
             .then(res => res.json())
-            .then(json => console.log("RESPONSEEE", json))
             .catch(error => console.error(error));
         setModalVisible(false);
         navigation.navigate('Serviços', { room: room })
@@ -157,7 +160,13 @@ function CustomCamera({ route }) {
                             onChangeText={(dateText) => handleDateChange(dateText)}
                             value={date}
                         />
-                        <Button title="Continuar" onPress={() => updateObject(imageName, token, text, date)} />
+                        <Text> Tipo do serviço: </Text>
+                            <SelectList
+                                setSelected={(val) => setSelected(val)}
+                                data={serviceTypes}
+                                save="value"
+                            />
+                        <Button title="Continuar" onPress={() => updateObject(imageName, token, text, date, selected)} />
                     </View>
                 </View>
             </Modal>

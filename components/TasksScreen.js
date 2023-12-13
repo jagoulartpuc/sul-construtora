@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -24,7 +24,31 @@ function Item({ name, onPress }) {
 
 function TasksScreen({ route }) {
     const { room, employee } = route.params;
-    let avaliableTasks = room.tasks.filter(task => task.avaliable);
+    const [avaliableTasks, setAvaliableTasks] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch('https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json');
+            const employees = await response.json();
+            const id = employee.id
+            let roomId = room.id;
+         
+            employees.forEach(emp => {
+                if (emp.id === id) {
+                    emp.buildings.forEach(build => {
+                        let room = build.rooms.find(room => room.id === roomId);
+                        if (room) {
+                            setAvaliableTasks(room.tasks.filter(task => task.avaliable))
+                        }
+                    });
+                }
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchData();
+      }, []);
 
     async function closeTask(task) {
         const url = 'https://sul-construtora-default-rtdb.firebaseio.com/funcionarios.json';
@@ -57,7 +81,6 @@ function TasksScreen({ route }) {
             headers: headers
         })
             .then(res => res.json())
-            .then(json => console.log("RESPONSEEE", json))
             .catch(error => console.error(error));
     }
 
